@@ -1,49 +1,40 @@
-"use client"
-
-import { useEffect, useRef, useState } from "react"
-import { Mail, Phone, MapPin, Github, Linkedin, Send } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import Link from "next/link"
+import { ArrowUpRight, Download, Github, Linkedin, Mail, MapPin, MessageCircle, Phone } from "lucide-react"
+import { ConsentPreferencesButton } from "@/components/consent-preferences-button"
 import { Button } from "@/components/ui/button"
+import { SectionHeading } from "@/components/section-heading"
+import { analyticsEvents } from "@/lib/analytics"
+import { portfolioData } from "@/lib/portfolio-data"
 
 export function ContactSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 },
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
-
   const contactInfo = [
     {
       icon: Mail,
       label: "Email",
-      value: "asherimusa505@gmail.com",
-      href: "mailto:asherimusa505@gmail.com",
+      value: portfolioData.email,
+      href: `mailto:${portfolioData.email}`,
+      analyticsEvent: analyticsEvents.emailClick,
     },
     {
       icon: Phone,
-      label: "Phone / WhatsApp",
-      value: "+256 764 292 546",
-      href: "tel:+256764292546",
+      label: "Call",
+      value: portfolioData.phone,
+      href: portfolioData.callHref,
+      analyticsEvent: analyticsEvents.phoneCallClick,
+    },
+    {
+      icon: MessageCircle,
+      label: "WhatsApp",
+      value: portfolioData.phone,
+      href: portfolioData.whatsappHref,
+      analyticsEvent: analyticsEvents.whatsappClick,
     },
     {
       icon: MapPin,
       label: "Location",
-      value: "Kampala, Uganda",
+      value: portfolioData.location,
       href: null,
+      analyticsEvent: undefined,
     },
   ]
 
@@ -51,99 +42,148 @@ export function ContactSection() {
     {
       icon: Github,
       label: "GitHub",
-      href: "https://github.com/Hashmozy",
+      href: portfolioData.socials[0].href,
     },
     {
       icon: Github,
       label: "GitHub Work",
-      href: "https://github.com/musatallen",
+      href: portfolioData.socials[1].href,
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
-      href: "https://www.linkedin.com/in/asheri-musa-942531211",
+      href: portfolioData.socials[2].href,
     },
   ]
 
+  const currentYear = new Date().getFullYear()
+
   return (
-    <section id="contact" ref={sectionRef} className="py-24">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <div
-            className={`${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} transition-all duration-700 mb-12 text-center`}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Get In Touch</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-pretty">
-              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
-              Let's build something amazing together.
-            </p>
-          </div>
+    <section id="contact" aria-labelledby="contact-title" className="section-space px-4 pb-16 sm:px-6">
+      <div className="mx-auto max-w-7xl space-y-8">
+        <div className="glass-panel-strong motion-card rounded-[34px] p-6 sm:p-8">
+          <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+            <div>
+              <SectionHeading
+                eyebrow="Contact"
+                titleId="contact-title"
+                title="Need a polished product presence or a stronger app experience?"
+                description="I’m open to product work, engineering leadership, and focused collaborations where execution quality matters."
+              />
 
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            {contactInfo.map((info, index) => {
-              const Icon = info.icon
-              return (
-                <Card
-                  key={index}
-                  className={`${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} transition-all duration-700 border-border hover:border-primary/50 transition-colors`}
-                  style={{ transitionDelay: `${(index + 1) * 100}ms` }}
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <Button asChild size="lg" className="h-12 w-full rounded-full px-6 sm:w-auto">
+                  <a
+                    href={`mailto:${portfolioData.email}`}
+                    data-analytics-event={analyticsEvents.emailClick}
+                    data-analytics-label="contact_email_cta"
+                    data-analytics-location="contact"
+                    data-analytics-title="Email Me"
+                  >
+                    Email Me
+                    <ArrowUpRight className="size-4" />
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="glass-panel h-12 w-full rounded-full border-white/15 bg-transparent px-6 sm:w-auto"
                 >
-                  <CardHeader>
+                  <Link
+                    href={portfolioData.resumeHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    prefetch={false}
+                    data-analytics-event={analyticsEvents.resumeDownload}
+                    data-analytics-label="contact_resume"
+                    data-analytics-location="contact"
+                    data-analytics-title="Resume"
+                  >
+                    <Download className="size-4" />
+                    Resume
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+            <div className="grid gap-4">
+              {contactInfo.map((info) => {
+                const Icon = info.icon
+
+                return (
+                  <article key={info.label} className="motion-card rounded-[28px] border border-white/10 bg-white/5 p-5">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-primary/10">
-                        <Icon className="h-5 w-5 text-primary" />
+                      <div className="rounded-2xl border border-white/10 bg-primary/10 p-3">
+                        <Icon className="size-5 text-primary" />
                       </div>
-                      <CardTitle className="text-lg">{info.label}</CardTitle>
+                      <div>
+                        <p className="text-sm font-semibold">{info.label}</p>
+                        {info.href ? (
+                          <a
+                            href={info.href}
+                            target={info.href.startsWith("http") ? "_blank" : undefined}
+                            rel={info.href.startsWith("http") ? "noreferrer" : undefined}
+                            data-analytics-event={info.analyticsEvent}
+                            data-analytics-label={info.label}
+                            data-analytics-location="contact-card"
+                            data-analytics-title={info.label}
+                            className="mt-1 block text-sm text-muted-foreground transition hover:text-primary"
+                          >
+                            {info.value}
+                          </a>
+                        ) : (
+                          <span className="mt-1 block text-sm text-muted-foreground">{info.value}</span>
+                        )}
+                      </div>
                     </div>
-                  </CardHeader>
-                  <CardContent>
-                    {info.href ? (
-                      <a href={info.href} className="text-muted-foreground hover:text-primary transition-colors">
-                        {info.value}
-                      </a>
-                    ) : (
-                      <span className="text-muted-foreground">{info.value}</span>
-                    )}
-                  </CardContent>
-                </Card>
-              )
-            })}
+                  </article>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div className="glass-panel motion-card rounded-[34px] p-6 sm:p-8">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">Socials</p>
+              <h3 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">Connect where you already work.</h3>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              {socialLinks.map((link) => {
+                const Icon = link.icon
+
+                return (
+                  <Button
+                    key={link.label}
+                    asChild
+                    variant="outline"
+                    className="glass-panel motion-button h-11 w-full rounded-full border-white/15 bg-transparent px-5 sm:w-auto"
+                  >
+                    <a href={link.href} target="_blank" rel="noreferrer">
+                      <Icon className="size-4" />
+                      {link.label}
+                    </a>
+                  </Button>
+                )
+              })}
+            </div>
           </div>
 
-          <Card
-            className={`${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} transition-all duration-700 delay-400 border-border`}
-          >
-            <CardHeader>
-              <CardTitle className="text-2xl">Connect With Me</CardTitle>
-              <CardDescription>Find me on these platforms or send me a message</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-4 mb-6">
-                {socialLinks.map((link, index) => {
-                  const Icon = link.icon
-                  return (
-                    <Button key={index} asChild variant="outline" className="gap-2 bg-transparent">
-                      <a href={link.href} target="_blank" rel="noopener noreferrer">
-                        <Icon className="h-4 w-4" />
-                        {link.label}
-                      </a>
-                    </Button>
-                  )
-                })}
-              </div>
-              <Button asChild size="lg" className="w-full gap-2">
-                <a href="mailto:asherimusa505@gmail.com">
-                  <Send className="h-4 w-4" />
-                  Send Me an Email
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
-
-          <div
-            className={`${isVisible ? "opacity-100" : "opacity-0"} transition-all duration-700 delay-600 mt-12 text-center text-muted-foreground`}
-          >
-            <p>© 2025 Asheri Musa. Built with Next.js and Tailwind CSS.</p>
+          <div className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
+            <p>
+              © {currentYear} {portfolioData.name}. Built with Next.js, Tailwind CSS, Bun-based workflows, and a dual
+              theme system for light, dark, and six accent palettes.
+            </p>
+            <div className="flex flex-wrap items-center gap-4">
+              <Link href="/privacy" className="font-medium text-foreground/85 transition hover:text-primary">
+                Privacy & Cookies
+              </Link>
+              <ConsentPreferencesButton className="font-medium text-foreground/85 transition hover:text-primary">
+                Review Cookie Choices
+              </ConsentPreferencesButton>
+            </div>
           </div>
         </div>
       </div>

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "clean:dev": "rm -rf .next-dev",
+    "dev": "bun run clean:dev && next dev --turbopack",
     "lint": "eslint .",
     "start": "next start"
   },

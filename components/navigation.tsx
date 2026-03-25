@@ -1,81 +1,64 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Sparkles } from "lucide-react"
+import { PortfolioDrawer } from "@/components/portfolio-drawer"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { portfolioData, sectionLinks } from "@/lib/portfolio-data"
+import { cn } from "@/lib/utils"
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+      setIsScrolled(window.scrollY > 24)
     }
+
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const navItems = [
-    { label: "About", href: "#about" },
-    { label: "Experience", href: "#experience" },
-    { label: "Projects", href: "#projects" },
-    { label: "Skills", href: "#skills" },
-    { label: "Education", href: "#education" },
-    { label: "Contact", href: "#contact" },
-  ]
-
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-background/95 backdrop-blur-sm border-b border-border" : "bg-transparent"
-      }`}
-    >
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <a href="#" className="text-xl font-bold text-primary">
-            AM
-          </a>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                {item.label}
-              </a>
-            ))}
-            <ThemeToggle />
+    <nav aria-label="Primary" className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-6">
+      <div
+        className={cn(
+          "animate-nav-enter mx-auto flex min-h-[4.35rem] max-w-7xl items-center justify-between gap-3 rounded-[30px] border px-3.5 py-3 transition-all duration-500 sm:min-h-[4.6rem] sm:rounded-full sm:px-5 sm:py-3.5",
+          isScrolled
+            ? "glass-panel-strong border-white/15 shadow-[0_24px_70px_rgba(0,0,0,0.22)]"
+            : "border-transparent bg-transparent",
+        )}
+      >
+        <a href="#top" className="flex items-center gap-3.5 pl-1">
+          <span className="flex size-11 items-center justify-center rounded-full border border-white/20 bg-primary/15 text-sm font-semibold text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.22)]">
+            {portfolioData.initials}
+          </span>
+          <div className="hidden min-[430px]:block">
+            <p className="text-sm font-semibold tracking-[0.08em] text-foreground">{portfolioData.name}</p>
+            <p className="text-xs text-muted-foreground">{portfolioData.role}</p>
           </div>
+        </a>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-2">
-            <ThemeToggle />
-            <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
-          </div>
+        <div className="hidden xl:flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2 py-2">
+          {sectionLinks.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="motion-pill rounded-full px-4 py-2 text-sm text-muted-foreground transition hover:bg-white/10 hover:text-foreground"
+            >
+              {item.label}
+            </a>
+          ))}
         </div>
 
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 flex flex-col gap-4">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.label}
-              </a>
-            ))}
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <div className="hidden lg:flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-muted-foreground">
+            <Sparkles className="size-3.5 text-primary" />
+            <span>Bun, Expo, Next.js, Laravel</span>
           </div>
-        )}
+          <ThemeToggle />
+          <PortfolioDrawer />
+        </div>
       </div>
     </nav>
   )

@@ -1,101 +1,95 @@
-"use client"
-
-import { useEffect, useRef, useState } from "react"
-import { Calendar } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { BriefcaseBusiness, CalendarRange, MapPin } from "lucide-react"
+import { SectionHeading } from "@/components/section-heading"
+import { portfolioData } from "@/lib/portfolio-data"
 
 export function ExperienceSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 },
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
-
-  const experiences = [
-    {
-      title: "FullStack Developer",
-      company: "Farmsell (TalenTech)",
-      period: "May 2024 - Present",
-      location: "Kampala, Uganda",
-      achievements: [
-        "Developed Farmsell mobile application using Expo React Native and Laravel, streamlining B2B market for farmers in East Africa",
-        "Led development of TalenTech company website using Supabase and Zeptomail, deployed in 1 month",
-        "Built Farmsell marketing website with blog and project portfolios, deployed in 3 months",
-        "Developed Netlife healthcare app with Supabase, Zeptomail, and Twilio WhatsApp integration, deployed in 2 months",
-        "Currently maintaining and updating the Farmsell mobile app",
-        "Collaborate in team to deliver comprehensive solutions with positive feedback",
-      ],
-      technologies: ["React Native", "Expo", "Laravel", "Supabase", "Zeptomail", "Twilio"],
-    },
-  ]
-
   return (
-    <section id="experience" ref={sectionRef} className="py-24">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <div
-            className={`${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} transition-all duration-700 mb-12`}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Experience</h2>
-            <p className="text-muted-foreground text-lg">
-              Building impactful solutions across mobile and web platforms
-            </p>
-          </div>
+    <section id="experience" aria-labelledby="experience-title" className="section-space px-4 sm:px-6">
+      <div className="mx-auto max-w-7xl space-y-8">
+        <SectionHeading
+          eyebrow="Experience"
+          titleId="experience-title"
+          title="Leading delivery, not just contributing code."
+          description="My current role combines hands-on implementation with architecture decisions, code review, product execution, and team direction."
+        />
 
-          <div className="space-y-6">
-            {experiences.map((exp, index) => (
-              <Card
-                key={index}
-                className={`${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"} transition-all duration-700 border-border hover:border-primary/50 transition-colors`}
-                style={{ transitionDelay: `${(index + 1) * 200}ms` }}
-              >
-                <CardHeader>
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                    <div>
-                      <CardTitle className="text-2xl mb-2">{exp.title}</CardTitle>
-                      <CardDescription className="text-lg text-primary">{exp.company}</CardDescription>
-                    </div>
-                    <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                      <Calendar className="h-4 w-4" />
-                      <span>{exp.period}</span>
-                    </div>
+        <div className="space-y-6">
+          {portfolioData.experience.map((experience) => (
+            <article key={experience.company} className="glass-panel-strong rounded-[34px] p-6 sm:p-8">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+                <div className="max-w-3xl">
+                  <div className="flex items-center gap-3 text-sm font-medium text-primary">
+                    <BriefcaseBusiness className="size-4" />
+                    Current role
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3 mb-6">
-                    {exp.achievements.map((achievement, i) => (
-                      <li key={i} className="flex gap-3 text-muted-foreground">
-                        <span className="text-primary mt-1.5">•</span>
-                        <span className="leading-relaxed">{achievement}</span>
+                  <h3 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-balance">{experience.title}</h3>
+                  <p className="mt-2 text-lg text-primary">{experience.company}</p>
+                  <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground">{experience.summary}</p>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                  <div className="rounded-[24px] border border-white/10 bg-white/5 px-4 py-4 text-sm text-muted-foreground">
+                    <span className="mb-2 flex items-center gap-2 font-semibold text-foreground">
+                      <CalendarRange className="size-4 text-primary" />
+                      Timeline
+                    </span>
+                    {experience.period}
+                  </div>
+                  <div className="rounded-[24px] border border-white/10 bg-white/5 px-4 py-4 text-sm text-muted-foreground">
+                    <span className="mb-2 flex items-center gap-2 font-semibold text-foreground">
+                      <MapPin className="size-4 text-primary" />
+                      Location
+                    </span>
+                    {experience.location}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+                <div className="rounded-[28px] border border-white/10 bg-black/10 p-5">
+                  <p className="text-sm font-semibold text-foreground">Selected Responsibilities</p>
+                  <ul className="mt-5 space-y-4 text-sm leading-7 text-muted-foreground">
+                    {experience.achievements.map((achievement) => (
+                      <li key={achievement} className="flex gap-3">
+                        <span className="mt-2 size-1.5 rounded-full bg-primary" />
+                        <span>{achievement}</span>
                       </li>
                     ))}
                   </ul>
-                  <div className="flex flex-wrap gap-2">
-                    {exp.technologies.map((tech) => (
-                      <Badge key={tech} variant="secondary">
-                        {tech}
-                      </Badge>
-                    ))}
+                </div>
+
+                <div className="grid gap-6">
+                  <div className="rounded-[28px] border border-white/10 bg-white/5 p-5">
+                    <p className="text-sm font-semibold text-foreground">Delivery Outcomes</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {experience.outcomes.map((item) => (
+                        <span
+                          key={item}
+                          className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+
+                  <div className="rounded-[28px] border border-white/10 bg-white/5 p-5">
+                    <p className="text-sm font-semibold text-foreground">Core Stack</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {experience.stack.map((item) => (
+                        <span
+                          key={item}
+                          className="rounded-full border border-white/10 bg-background/40 px-3 py-1.5 text-xs font-medium text-muted-foreground"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>

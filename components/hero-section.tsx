@@ -1,158 +1,212 @@
-"use client"
-
-import { useEffect, useRef } from "react"
-import { Github, Linkedin, Mail, Phone } from "lucide-react"
+import Link from "next/link"
+import { ArrowUpRight, Download, Github, Linkedin, Mail, MapPin, Phone, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useTheme } from "@/components/theme-provider"
+import { analyticsEvents } from "@/lib/analytics"
+import { portfolioData } from "@/lib/portfolio-data"
 
 export function HeroSection() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const { theme } = useTheme()
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
-
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
-
-    const particles: Array<{
-      x: number
-      y: number
-      vx: number
-      vy: number
-      radius: number
-    }> = []
-
-    for (let i = 0; i < 80; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        radius: Math.random() * 2 + 1,
-      })
-    }
-
-    function animate() {
-      if (!ctx || !canvas) return
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      const particleColor = theme === "light" ? "rgba(20, 184, 166, 0.4)" : "rgba(20, 184, 166, 0.3)"
-      const lineColor = theme === "light" ? "rgba(20, 184, 166, 0.3)" : "rgba(20, 184, 166, 0.2)"
-
-      particles.forEach((particle) => {
-        particle.x += particle.vx
-        particle.y += particle.vy
-
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1
-
-        ctx.beginPath()
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2)
-        ctx.fillStyle = particleColor
-        ctx.fill()
-      })
-
-      particles.forEach((p1, i) => {
-        particles.slice(i + 1).forEach((p2) => {
-          const dx = p1.x - p2.x
-          const dy = p1.y - p2.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
-
-          if (distance < 150) {
-            ctx.beginPath()
-            ctx.moveTo(p1.x, p1.y)
-            ctx.lineTo(p2.x, p2.y)
-            const opacity = theme === "light" ? 0.3 : 0.2
-            ctx.strokeStyle = `rgba(20, 184, 166, ${opacity * (1 - distance / 150)})`
-            ctx.lineWidth = 0.5
-            ctx.stroke()
-          }
-        })
-      })
-
-      requestAnimationFrame(animate)
-    }
-
-    animate()
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [theme])
+  const socialLinks = [
+    {
+      label: "GitHub",
+      href: portfolioData.socials[0].href,
+      icon: Github,
+    },
+    {
+      label: "LinkedIn",
+      href: portfolioData.socials[2].href,
+      icon: Linkedin,
+    },
+    {
+      label: "Email",
+      href: `mailto:${portfolioData.email}`,
+      icon: Mail,
+      analyticsEvent: analyticsEvents.emailClick,
+      analyticsLocation: "hero-card",
+    },
+    {
+      label: "Call",
+      href: portfolioData.callHref,
+      icon: Phone,
+      analyticsEvent: analyticsEvents.phoneCallClick,
+      analyticsLocation: "hero-card",
+    },
+  ]
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5 dark:to-primary/10" />
-      <canvas ref={canvasRef} className="absolute inset-0 z-0" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
-
-      <div className="container mx-auto px-4 z-10 relative">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="opacity-0 animate-fade-in-up">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance">Asheri Musa</h1>
+    <header aria-labelledby="hero-title" aria-describedby="hero-summary" className="relative px-4 pb-20 pt-32 sm:px-6 sm:pt-36 lg:pt-40">
+      <div className="mx-auto grid max-w-7xl gap-6 sm:gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div className="space-y-8">
+          <div className="glass-panel motion-pill inline-flex w-full animate-reveal justify-center rounded-full px-4 py-2 text-center text-sm font-medium text-foreground/80 sm:w-auto sm:justify-start sm:text-left">
+            <Sparkles className="mr-2 size-4 text-primary" />
+            Building modern mobile, web, and admin products with Bun in the workflow.
           </div>
 
-          <div className="opacity-0 animate-fade-in-up delay-200">
-            <p className="text-xl md:text-2xl text-primary mb-4">Full Stack Developer</p>
-          </div>
-
-          <div className="opacity-0 animate-fade-in-up delay-300">
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-              Results-driven Software Engineer specializing in mobile app development, React Native, and full-stack
-              solutions. Building innovative applications that make a difference in East Africa and beyond.
+          <div className="space-y-6 animate-reveal [animation-delay:120ms]">
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">{portfolioData.role}</p>
+            <h1 id="hero-title" className="max-w-4xl text-4xl font-semibold tracking-[-0.06em] text-balance sm:text-5xl md:text-7xl">
+              {portfolioData.name}
+              <span className="mt-3 block text-gradient">Design-forward product delivery across mobile and web.</span>
+            </h1>
+            <p id="hero-summary" className="max-w-2xl text-base leading-7 text-muted-foreground text-pretty sm:text-lg sm:leading-8 md:text-xl">
+              {portfolioData.summary}
             </p>
           </div>
 
-          <div className="opacity-0 animate-fade-in-up delay-400 flex flex-wrap items-center justify-center gap-4 mb-8">
-            <Button asChild size="lg" className="gap-2">
+          <div className="flex flex-col gap-3 animate-reveal sm:flex-row sm:flex-wrap [animation-delay:220ms]">
+            <Button asChild size="lg" className="motion-button h-12 w-full rounded-full px-6 text-sm sm:w-auto">
               <a href="#contact">
-                <Mail className="h-4 w-4" />
-                Get In Touch
+                Start a Conversation
+                <ArrowUpRight className="size-4" />
               </a>
             </Button>
-            <Button asChild variant="outline" size="lg" className="gap-2 bg-transparent">
-              <a href="#projects">View Projects</a>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="glass-panel motion-button h-12 w-full rounded-full border-white/15 bg-transparent px-6 text-sm sm:w-auto"
+            >
+              <Link
+                href={portfolioData.resumeHref}
+                target="_blank"
+                rel="noreferrer"
+                prefetch={false}
+                data-analytics-event={analyticsEvents.resumeDownload}
+                data-analytics-label="hero_resume"
+                data-analytics-location="hero"
+                data-analytics-title="Download Resume"
+              >
+                <Download className="size-4" />
+                Download Resume
+              </Link>
             </Button>
           </div>
 
-          <div className="opacity-0 animate-fade-in-up delay-500 flex items-center justify-center gap-6">
-            <a
-              href="https://github.com/Hashmozy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
-              <Github className="h-6 w-6" />
-            </a>
-            <a
-              href="https://github.com/musatallen"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
-              <Linkedin className="h-6 w-6" />
-            </a>
-            <a
-              href="mailto:asherimusa505@gmail.com"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
-              <Mail className="h-6 w-6" />
-            </a>
-            <a href="tel:+256754560414" className="text-muted-foreground hover:text-primary transition-colors">
-              <Phone className="h-6 w-6" />
-            </a>
+          <div className="flex flex-wrap gap-2 animate-reveal [animation-delay:320ms]">
+            {portfolioData.heroHighlights.map((item) => (
+              <span
+                key={item}
+                className="motion-pill rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-muted-foreground backdrop-blur-xl"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+
+          <div className="grid gap-3 text-sm text-muted-foreground animate-reveal sm:flex sm:flex-wrap sm:gap-6 [animation-delay:420ms]">
+            <span className="inline-flex items-center gap-2">
+              <MapPin className="size-4 text-primary" />
+              {portfolioData.location}
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <Mail className="size-4 text-primary" />
+              {portfolioData.email}
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <Phone className="size-4 text-primary" />
+              {portfolioData.phone}
+            </span>
+          </div>
+        </div>
+
+        <div className="relative animate-reveal [animation-delay:180ms]">
+          <div className="glass-panel-strong motion-card relative overflow-hidden rounded-[28px] p-5 sm:rounded-[32px] sm:p-8">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent" />
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">Currently leading</p>
+                <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-balance sm:text-3xl md:text-4xl">
+                  Shipping product systems at Tallen Tech
+                </h2>
+              </div>
+              <span className="rounded-full border border-emerald-400/25 bg-emerald-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">
+                Open to select collaborations
+              </span>
+            </div>
+
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-[28px] border border-white/10 bg-white/[0.06] p-5">
+                <p className="text-sm font-semibold text-foreground">Current Focus</p>
+                <ul className="mt-4 space-y-3 text-sm leading-6 text-muted-foreground">
+                  {portfolioData.currentFocus.map((item) => (
+                    <li key={item} className="flex gap-3">
+                      <span className="mt-2 size-1.5 rounded-full bg-primary" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-[28px] border border-white/10 bg-white/[0.06] p-5">
+                <p className="text-sm font-semibold text-foreground">Sector Coverage</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {portfolioData.sectors.map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-white/10 bg-background/40 px-3 py-1.5 text-xs font-medium text-muted-foreground"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                <p className="mt-6 text-sm font-semibold text-foreground">Shipping Stack</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {["React Native", "Expo", "Next.js", "Bun", "GraphQL", "Laravel"].map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              {portfolioData.stats.map((item) => (
+                <div key={item.label} className="rounded-[24px] border border-white/10 bg-black/10 p-4">
+                  <p className="text-3xl font-semibold tracking-[-0.05em] text-foreground">{item.value}</p>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="glass-panel absolute -bottom-6 -left-2 hidden w-56 animate-float-slow rounded-[28px] p-4 xl:block">
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary/80">Contact Layer</p>
+            <div className="mt-4 grid gap-2">
+              {socialLinks.map((link) => {
+                const Icon = link.icon
+
+                return (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target={link.href.startsWith("http") ? "_blank" : undefined}
+                    rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+                    data-analytics-event={link.analyticsEvent}
+                    data-analytics-label={link.label}
+                    data-analytics-location={link.analyticsLocation}
+                    data-analytics-title={link.label}
+                    className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-3 py-3 text-sm transition hover:border-primary/30 hover:bg-primary/10"
+                  >
+                    <Icon className="size-4 text-primary" />
+                    <span>{link.label}</span>
+                  </a>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="glass-panel absolute -right-4 -top-8 hidden w-52 animate-float-medium rounded-[28px] p-4 lg:block">
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary/80">Workflow</p>
+            <p className="mt-3 text-lg font-semibold tracking-[-0.03em]">Bun-first tooling with release discipline.</p>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">
+              Fast local iteration, consistent UI patterns, and practical shipping decisions across the stack.
+            </p>
           </div>
         </div>
       </div>
-    </section>
+    </header>
   )
 }

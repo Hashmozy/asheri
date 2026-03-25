@@ -1,154 +1,78 @@
-"use client"
-
-import { useEffect, useRef, useState } from "react"
-import { GraduationCap, Award, Calendar } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Award, GraduationCap } from "lucide-react"
+import { SectionHeading } from "@/components/section-heading"
+import { portfolioData } from "@/lib/portfolio-data"
 
 export function EducationSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 },
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
-
-  const education = {
-    degree: "Bachelor's of Science in Software Engineering",
-    institution: "Uganda Technology And Management University",
-    location: "Uganda",
-    period: "September 2018 - September 2023",
-    highlights: [
-      "Completed comprehensive project in data science and machine learning",
-      "Developed Facial Recognition system with 87% accuracy in team of three",
-      "Completed industrial training on computer networks using Cisco Packet Tracer and Wireshark",
-    ],
-    coursework: [
-      "Data Structures & Algorithms",
-      "Software Project Management",
-      "Database Management Systems",
-      "Computer Networks",
-      "Web Development",
-      "Operating Systems",
-      "Software Architecture",
-      "Data Science & Machine Learning",
-    ],
-  }
-
-  const certifications = [
-    {
-      title: "Python Bootcamp",
-      provider: "Udemy",
-      date: "January 2024",
-      description:
-        "Developed real-world Python projects, utilized data science frameworks like Pandas, Scikit-learn, Matplotlib",
-    },
-    {
-      title: "Solana Blockchain Development Bootcamp",
-      provider: "Udemy",
-      date: "August 2022",
-      description: "Developed DApp calculator and created blockchain wallets using Web3.js and Rust Programming",
-    },
-    {
-      title: "Industrial Training Certification",
-      provider: "Uganda Technology And Management University",
-      date: "September 2019",
-      description: "Facial recognition system development and centralized computer network using Cisco Packet Tracer",
-    },
-  ]
-
   return (
-    <section id="education" ref={sectionRef} className="py-24 bg-card/50">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <div
-            className={`${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} transition-all duration-700 mb-12`}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Education</h2>
-            <p className="text-muted-foreground text-lg">Academic background and professional certifications</p>
-          </div>
+    <section id="education" className="section-space px-4 sm:px-6">
+      <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="glass-panel-strong rounded-[32px] p-6 sm:p-8">
+          <SectionHeading
+            eyebrow="Education"
+            title="Grounded in software engineering fundamentals."
+            description="My academic background gave me the base for architecture, systems thinking, and the machine learning work that later fed into product execution."
+          />
 
-          <Card
-            className={`${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} transition-all duration-700 delay-200 border-border mb-8`}
-          >
-            <CardHeader>
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-lg bg-primary/10">
-                  <GraduationCap className="h-6 w-6 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <CardTitle className="text-2xl mb-2">{education.degree}</CardTitle>
-                  <CardDescription className="text-lg text-primary mb-2">{education.institution}</CardDescription>
-                  <div className="flex items-center gap-2 text-muted-foreground text-sm">
-                    <Calendar className="h-4 w-4" />
-                    <span>{education.period}</span>
-                  </div>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <h4 className="font-semibold mb-3">Highlights</h4>
-                <ul className="space-y-2">
-                  {education.highlights.map((highlight, i) => (
-                    <li key={i} className="flex gap-3 text-muted-foreground">
-                      <span className="text-primary mt-1.5">•</span>
-                      <span className="leading-relaxed">{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
+          <div className="mt-8 rounded-[28px] border border-white/10 bg-black/10 p-5">
+            <div className="flex items-start gap-4">
+              <div className="rounded-2xl border border-white/10 bg-primary/10 p-3">
+                <GraduationCap className="size-6 text-primary" />
               </div>
               <div>
-                <h4 className="font-semibold mb-3">Relevant Coursework</h4>
-                <div className="flex flex-wrap gap-2">
-                  {education.coursework.map((course) => (
-                    <Badge key={course} variant="secondary">
-                      {course}
-                    </Badge>
-                  ))}
-                </div>
+                <h3 className="text-2xl font-semibold tracking-[-0.03em]">{portfolioData.education.degree}</h3>
+                <p className="mt-2 text-base text-primary">{portfolioData.education.institution}</p>
+                <p className="mt-2 text-sm text-muted-foreground">{portfolioData.education.period}</p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          <div
-            className={`${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} transition-all duration-700 delay-400`}
-          >
-            <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
-              <Award className="h-6 w-6 text-primary" />
-              Certifications
-            </h3>
-            <div className="space-y-4">
-              {certifications.map((cert, index) => (
-                <Card key={index} className="border-border hover:border-primary/50 transition-colors">
-                  <CardHeader>
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
-                      <div>
-                        <CardTitle className="text-xl">{cert.title}</CardTitle>
-                        <CardDescription className="text-primary">{cert.provider}</CardDescription>
-                      </div>
-                      <Badge variant="outline">{cert.date}</Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground leading-relaxed">{cert.description}</p>
-                  </CardContent>
-                </Card>
+            <ul className="mt-6 space-y-4 text-sm leading-7 text-muted-foreground">
+              {portfolioData.education.highlights.map((item) => (
+                <li key={item} className="flex gap-3">
+                  <span className="mt-2 size-1.5 rounded-full bg-primary" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              {portfolioData.education.coursework.map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-muted-foreground"
+                >
+                  {item}
+                </span>
               ))}
             </div>
+          </div>
+        </div>
+
+        <div className="glass-panel rounded-[32px] p-6 sm:p-8">
+          <div className="flex items-center gap-3">
+            <div className="rounded-2xl border border-white/10 bg-primary/10 p-3">
+              <Award className="size-5 text-primary" />
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">Credentials</p>
+              <h3 className="mt-2 text-3xl font-semibold tracking-[-0.04em]">Certifications & training</h3>
+            </div>
+          </div>
+
+          <div className="mt-8 space-y-4">
+            {portfolioData.certifications.map((item) => (
+              <article key={item.title} className="rounded-[28px] border border-white/10 bg-white/5 p-5">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <h4 className="text-xl font-semibold tracking-[-0.03em]">{item.title}</h4>
+                    <p className="mt-1 text-sm text-primary">{item.provider}</p>
+                  </div>
+                  <span className="rounded-full border border-white/10 bg-background/40 px-3 py-1.5 text-xs font-medium text-muted-foreground">
+                    {item.date}
+                  </span>
+                </div>
+                <p className="mt-4 text-sm leading-7 text-muted-foreground">{item.description}</p>
+              </article>
+            ))}
           </div>
         </div>
       </div>
