@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Download, Github, Linkedin, Mail, MessageCircle, MoonStar, Palette, Phone, Sparkles, SunMedium } from "lucide-react"
+import { Download, Github, Linkedin, Mail, MessageCircle, MoonStar, Palette, Phone, Sparkles, SunMedium, X } from "lucide-react"
 import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"
 import { Button } from "@/components/ui/button"
 import { accentThemes, useAccentTheme, useTheme } from "@/components/theme-provider"
@@ -42,13 +42,28 @@ export function PortfolioDrawer() {
           <span className="hidden sm:inline">Control Center</span>
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="border-white/10 bg-background/70 backdrop-blur-3xl data-[vaul-drawer-direction=right]:w-[min(100vw,28rem)] sm:data-[vaul-drawer-direction=right]:max-w-[28rem]">
+      <DrawerContent className="border-white/10 bg-background/70 backdrop-blur-3xl data-[vaul-drawer-direction=right]:w-[min(calc(100vw-1rem),28rem)] sm:data-[vaul-drawer-direction=right]:max-w-[28rem]">
         <div className="flex h-full flex-col overflow-y-auto px-6 pb-6">
-          <div className="border-b border-white/10 py-6">
-            <DrawerTitle className="text-2xl tracking-[-0.03em]">{portfolioData.name}</DrawerTitle>
-            <DrawerDescription className="mt-2 max-w-sm leading-6">
-              Feature-rich controls for light and dark mode, accent themes, navigation, and quick actions.
-            </DrawerDescription>
+          <div className="sticky top-0 z-10 -mx-6 border-b border-white/10 bg-background/82 px-6 py-5 backdrop-blur-3xl">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <DrawerTitle className="text-2xl tracking-[-0.03em]">{portfolioData.name}</DrawerTitle>
+                <DrawerDescription className="mt-2 max-w-sm leading-6">
+                  Feature-rich controls for light and dark mode, accent themes, navigation, and quick actions.
+                </DrawerDescription>
+              </div>
+              <DrawerClose asChild>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  aria-label="Close control center"
+                  className="glass-panel motion-button size-10 shrink-0 rounded-full border-white/15 bg-transparent"
+                >
+                  <X className="size-4" />
+                </Button>
+              </DrawerClose>
+            </div>
           </div>
 
           <div className="space-y-4 py-6">
