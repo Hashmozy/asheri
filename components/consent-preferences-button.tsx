@@ -1,9 +1,9 @@
 "use client"
 
 import type { ButtonHTMLAttributes, MouseEvent } from "react"
-import { ANALYTICS_CONSENT_OPEN_EVENT } from "@/lib/analytics"
+import { ANALYTICS_CONSENT_OPEN_EVENT, analyticsMeasurementId } from "@/lib/analytics"
 
-const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim()
+const measurementId = analyticsMeasurementId
 
 type ConsentPreferencesButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
 

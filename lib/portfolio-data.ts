@@ -9,7 +9,7 @@ export const sectionLinks = [
 export const portfolioData = {
   name: "Asheri Musa",
   initials: "AM",
-  role: "Full-Stack Software Engineer & Team Lead",
+  role: "Full-Stack Software Engineer",
   location: "Kampala, Uganda",
   email: "asherimusa505@gmail.com",
   phone: "+256754560414",
@@ -18,14 +18,8 @@ export const portfolioData = {
   summary:
     "Results-driven engineer delivering production mobile apps, web platforms, admin dashboards, and PWAs with React Native, Expo, Next.js, Bun, Node.js, GraphQL, and Laravel.",
   introduction: [
-    "I lead delivery across product, design, and engineering at Tallen Tech, building modern software that feels polished, useful, and ready for real operations.",
+    "I drive delivery across product, design, and engineering at Tallen Tech, building modern software that feels polished, useful, and ready for real operations.",
     "My work spans agriculture, healthcare, e-commerce, and digital brand platforms, with a strong focus on clean UI systems, reliable APIs, and disciplined shipping.",
-  ],
-  heroHighlights: [
-    "React Native / Expo apps",
-    "Next.js websites & dashboards",
-    "Bun, Node.js & Laravel backends",
-    "CI/CD, reviews & team leadership",
   ],
   stats: [
     {
@@ -48,19 +42,19 @@ export const portfolioData = {
   ],
   sectors: ["Agriculture", "Healthcare", "E-commerce", "Professional Networking"],
   currentFocus: [
-    "Shipping React Native apps with Expo",
-    "Designing glassy, high-conviction interfaces",
-    "Building with Bun-based workflows",
-    "Leading teams through product delivery",
+    "Shipping production-ready mobile and web products",
+    "Designing clearer interfaces with stronger UX polish",
+    "Structuring reliable APIs and admin workflows",
+    "Improving release quality across iterations",
   ],
   experience: [
     {
-      title: "Full-Stack Team Lead",
+      title: "Full-Stack Software Engineer",
       company: "Tallen Tech",
       period: "July 2024 - Present",
       location: "Kampala, Uganda",
       summary:
-        "Leading cross-functional delivery across mobile, marketing, and product systems with an emphasis on architecture, execution speed, and shipping quality.",
+        "Driving cross-functional delivery across mobile, marketing, and product systems with an emphasis on architecture, execution speed, and shipping quality.",
       achievements: [
         "Led development of the Farmsell mobile product using React Native, Expo, and Laravel for East African agricultural trade.",
         "Delivered the Tallen Tech website and the Farmsell marketing experience with modern responsive design and structured content flows.",
@@ -83,7 +77,7 @@ export const portfolioData = {
         "Production apps",
         "Responsive websites",
         "Admin-ready workflows",
-        "Cross-functional team leadership",
+        "Cross-functional delivery",
       ],
     },
   ],
@@ -165,8 +159,8 @@ export const portfolioData = {
       items: ["Git", "Figma", "Cursor", "Antigravity", "Kanboard", "Code Review"],
     },
     {
-      title: "Leadership",
-      items: ["Team Lead", "Refactoring", "Project Planning", "Delivery Ownership"],
+      title: "Delivery",
+      items: ["Refactoring", "Project Planning", "Release Quality", "Delivery Ownership"],
     },
   ],
   education: {

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowUpRight, Download, Github, Linkedin, Mail, MapPin, Phone, Sparkles } from "lucide-react"
+import { ArrowUpRight, Download, Flame, Github, Linkedin, Mail, MapPin, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { analyticsEvents } from "@/lib/analytics"
 import { portfolioData } from "@/lib/portfolio-data"
@@ -37,8 +37,10 @@ export function HeroSection() {
       <div className="mx-auto grid max-w-7xl gap-6 sm:gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div className="space-y-8">
           <div className="glass-panel motion-pill inline-flex w-full animate-reveal justify-center rounded-full px-4 py-2 text-center text-sm font-medium text-foreground/80 sm:w-auto sm:justify-start sm:text-left">
-            <Sparkles className="mr-2 size-4 text-primary" />
-            Building modern mobile, web, and admin products with Bun in the workflow.
+            <span className="mr-2 inline-flex size-6 items-center justify-center rounded-full border border-primary/20 bg-primary/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]">
+              <Flame className="size-4 text-primary" />
+            </span>
+            Building modern mobile, web, and admin products.
           </div>
 
           <div className="space-y-6 animate-reveal [animation-delay:120ms]">
@@ -81,18 +83,7 @@ export function HeroSection() {
             </Button>
           </div>
 
-          <div className="flex flex-wrap gap-2 animate-reveal [animation-delay:320ms]">
-            {portfolioData.heroHighlights.map((item) => (
-              <span
-                key={item}
-                className="motion-pill rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-muted-foreground backdrop-blur-xl"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
-
-          <div className="grid gap-3 text-sm text-muted-foreground animate-reveal sm:flex sm:flex-wrap sm:gap-6 [animation-delay:420ms]">
+          <div className="grid gap-3 text-sm text-muted-foreground animate-reveal [animation-delay:320ms] sm:flex sm:flex-wrap sm:gap-6">
             <span className="inline-flex items-center gap-2">
               <MapPin className="size-4 text-primary" />
               {portfolioData.location}
@@ -113,7 +104,7 @@ export function HeroSection() {
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent" />
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">Currently leading</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary/80">Currently building</p>
                 <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-balance sm:text-3xl md:text-4xl">
                   Shipping product systems at Tallen Tech
                 </h2>
@@ -148,16 +139,11 @@ export function HeroSection() {
                     </span>
                   ))}
                 </div>
-                <p className="mt-6 text-sm font-semibold text-foreground">Shipping Stack</p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {["React Native", "Expo", "Next.js", "Bun", "GraphQL", "Laravel"].map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary"
-                    >
-                      {item}
-                    </span>
-                  ))}
+                <div className="mt-6 rounded-[22px] border border-white/10 bg-black/10 p-4">
+                  <p className="text-sm font-semibold text-foreground">Delivery Style</p>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    Clear interfaces, stable architecture, and practical shipping decisions across mobile, web, and admin surfaces.
+                  </p>
                 </div>
               </div>
             </div>
@@ -200,7 +186,7 @@ export function HeroSection() {
 
           <div className="glass-panel absolute -right-4 -top-8 hidden w-52 animate-float-medium rounded-[28px] p-4 lg:block">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary/80">Workflow</p>
-            <p className="mt-3 text-lg font-semibold tracking-[-0.03em]">Bun-first tooling with release discipline.</p>
+            <p className="mt-3 text-lg font-semibold tracking-[-0.03em]">Clear delivery with strong release discipline.</p>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
               Fast local iteration, consistent UI patterns, and practical shipping decisions across the stack.
             </p>

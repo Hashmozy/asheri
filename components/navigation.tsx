@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Sparkles } from "lucide-react"
 import { PortfolioDrawer } from "@/components/portfolio-drawer"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { portfolioData, sectionLinks } from "@/lib/portfolio-data"
@@ -28,10 +27,10 @@ export function Navigation() {
             ? "glass-panel-strong border-white/15 shadow-[0_24px_70px_rgba(0,0,0,0.22)]"
             : "border-transparent bg-transparent",
         )}
-      >
+        >
         <a href="#top" className="flex items-center gap-3.5 pl-1">
-          <span className="flex size-11 items-center justify-center rounded-full border border-white/20 bg-primary/15 text-sm font-semibold text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.22)]">
-            {portfolioData.initials}
+          <span className="flex size-11 items-center justify-center rounded-full border border-primary/20 bg-primary/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]">
+            <span className="text-sm font-semibold tracking-[0.08em] text-primary">{portfolioData.initials}</span>
           </span>
           <div className="hidden min-[430px]:block">
             <p className="text-sm font-semibold tracking-[0.08em] text-foreground">{portfolioData.name}</p>
@@ -52,10 +51,6 @@ export function Navigation() {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-2.5">
-          <div className="hidden lg:flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-muted-foreground">
-            <Sparkles className="size-3.5 text-primary" />
-            <span>Bun, Expo, Next.js, Laravel</span>
-          </div>
           <ThemeToggle />
           <PortfolioDrawer />
         </div>

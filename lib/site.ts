@@ -6,13 +6,12 @@ export const siteConfig = {
   name: portfolioData.name,
   title: "Asheri Musa | Full-Stack Software Engineer",
   description:
-    "Portfolio of Asheri Musa, a full-stack software engineer and team lead building polished mobile apps, modern websites, and production-ready digital products.",
+    "Portfolio of Asheri Musa, a full-stack software engineer building polished mobile apps, modern websites, and production-ready digital products.",
   siteUrl: (process.env.NEXT_PUBLIC_SITE_URL || fallbackSiteUrl).replace(/\/$/, ""),
   locale: "en_US",
   keywords: [
     "Asheri Musa",
     "Full-Stack Software Engineer",
-    "Team Lead",
     "React Native developer",
     "Expo developer",
     "Next.js developer",

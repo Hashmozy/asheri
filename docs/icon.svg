@@ -16,9 +16,7 @@
   <rect x="8" y="8" width="48" height="48" rx="14" fill="url(#glow)" />
 
   <path
-    d="M18 46L28.8 18H35L46 46H39.2L36.7 39.2H27.1L24.6 46H18ZM28.9 33.8H34.9L31.9 25.4L28.9 33.8Z"
+    d="M16 46V18H22.4L31.9 33.3L41.4 18H48V46H41.6V29.1L34.7 40.4H29.1L22.4 29.1V46H16Z"
     fill="white"
   />
-
-  <circle cx="45.5" cy="18.5" r="4.5" fill="#A5F3FC" />
 </svg>

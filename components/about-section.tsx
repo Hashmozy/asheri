@@ -11,7 +11,7 @@ export function AboutSection() {
             eyebrow="About"
             titleId="about-title"
             title="Product-minded engineering with strong visual taste."
-            description="I combine frontend craft, backend practicality, and delivery leadership to create products that feel modern, useful, and ready for real users."
+            description="I combine frontend craft, backend practicality, and disciplined delivery to create products that feel modern, useful, and ready for real users."
           />
 
           <div className="mt-8 space-y-5 text-base leading-8 text-muted-foreground md:text-lg">

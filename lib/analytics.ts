@@ -6,6 +6,9 @@ export const analyticsEvents = {
   whatsappClick: "whatsapp_click",
 } as const
 
+const fallbackMeasurementId = "G-5LFESDLPJ1"
+
+export const analyticsMeasurementId = (process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || fallbackMeasurementId).trim()
 export const ANALYTICS_CONSENT_STORAGE_KEY = "asheri-analytics-consent"
 export const ANALYTICS_CONSENT_OPEN_EVENT = "asheri-analytics:open-preferences"
 export const ANALYTICS_CONSENT_WAIT_FOR_UPDATE_MS = 500

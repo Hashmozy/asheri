@@ -173,8 +173,8 @@ export function ContactSection() {
 
           <div className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
             <p>
-              © {currentYear} {portfolioData.name}. Built with Next.js, Tailwind CSS, Bun-based workflows, and a dual
-              theme system for light, dark, and six accent palettes.
+              © {currentYear} {portfolioData.name}. Built with a modern web stack and a dual theme system for light,
+              dark, and six accent palettes.
             </p>
             <div className="flex flex-wrap items-center gap-4">
               <Link href="/privacy" className="font-medium text-foreground/85 transition hover:text-primary">

@@ -41,9 +41,10 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: absoluteUrl("/social-preview.svg"),
+        url: absoluteUrl("/social-preview.png"),
         width: 1200,
         height: 630,
+        type: "image/png",
         alt: `${siteConfig.name} portfolio preview`,
       },
     ],
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [absoluteUrl("/social-preview.svg")],
+    images: [absoluteUrl("/social-preview.png")],
   },
   icons: {
     icon: [{ url: absoluteUrl("/icon.svg"), type: "image/svg+xml" }],
