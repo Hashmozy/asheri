@@ -351,6 +351,7 @@
   .motion-pill:hover {
     transform: translate3d(0, -1px, 0);
   }
+
 }
 
 @media (max-width: 640px) {
@@ -420,6 +421,18 @@
   }
 }
 
+@keyframes cursor-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -432,4 +445,5 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
 }

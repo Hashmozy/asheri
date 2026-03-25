@@ -41,12 +41,12 @@ export function ContactSection() {
   const socialLinks = [
     {
       icon: Github,
-      label: "GitHub",
+      label: portfolioData.socials[0].label,
       href: portfolioData.socials[0].href,
     },
     {
       icon: Github,
-      label: "GitHub Work",
+      label: portfolioData.socials[1].label,
       href: portfolioData.socials[1].href,
     },
     {

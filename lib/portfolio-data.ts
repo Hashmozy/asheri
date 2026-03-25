@@ -21,6 +21,16 @@ export const portfolioData = {
     "I drive delivery across product, design, and engineering at Tallen Tech, building modern software that feels polished, useful, and ready for real operations.",
     "My work spans agriculture, healthcare, e-commerce, and digital brand platforms, with a strong focus on clean UI systems, reliable APIs, and disciplined shipping.",
   ],
+  heroSkillWords: [
+    "mobile apps",
+    "web platforms",
+    "admin systems",
+    "product dashboards",
+    "API workflows",
+    "healthcare tools",
+    "commerce experiences",
+    "brand websites",
+  ],
   stats: [
     {
       value: "3+",
@@ -202,8 +212,8 @@ export const portfolioData = {
     },
   ],
   socials: [
-    { label: "GitHub", href: "https://github.com/Hashmozy" },
-    { label: "GitHub Work", href: "https://github.com/musatallen" },
+    { label: "GitHub", href: "https://github.com/musatallen" },
+    { label: "Hashmozy GitHub", href: "https://github.com/Hashmozy" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/asheri-musa-942531211" },
   ],
   resumeHref: "/Asheri-Musa-Resume.pdf",
