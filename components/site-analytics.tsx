@@ -189,45 +189,52 @@ export function SiteAnalytics() {
   }
 
   return isBannerOpen ? (
-    <div className="pointer-events-none fixed inset-x-0 bottom-3 z-[70] px-3 sm:bottom-4 sm:px-4 md:inset-x-auto md:right-5 md:w-[min(calc(100vw-2rem),27rem)] md:px-0 lg:right-6">
-      <div className="glass-panel-strong pointer-events-auto relative mx-auto overflow-hidden rounded-[28px] border border-white/15 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.24)] sm:p-4.5">
+    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/28 px-4 py-6 backdrop-blur-[3px] sm:px-6">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="consent-title"
+        aria-describedby="consent-description"
+        className="glass-panel-strong relative w-full max-w-[24rem] overflow-hidden rounded-[28px] border border-white/15 p-4 shadow-[0_24px_80px_rgba(0,0,0,0.24)] sm:p-5"
+      >
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent" />
-        <div className="flex items-start gap-3">
-          <div className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10">
-            <Flame className="size-5 text-primary" />
+        <div>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex size-8 items-center justify-center rounded-xl border border-primary/20 bg-primary/10">
+              <Flame className="size-4 text-primary" />
+            </span>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary/80">Privacy</p>
+            <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+              Optional
+            </span>
           </div>
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-primary/80">Privacy</p>
-              <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-                Optional
-              </span>
-            </div>
-            <h2 className="mt-2 text-lg font-semibold tracking-[-0.04em] sm:text-xl">
-              Allow lightweight visitor analytics?
-            </h2>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              Helps track visits, resume downloads, and contact clicks. Analytics stays off until you choose.
-            </p>
-            <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-              <Button
-                type="button"
-                variant="outline"
-                className="glass-panel h-10 rounded-full border-white/15 bg-transparent px-4"
-                onClick={() => updateConsent("denied")}
-              >
-                Decline
-              </Button>
-              <Button type="button" className="h-10 rounded-full px-4" onClick={() => updateConsent("granted")}>
-                Accept
-              </Button>
-              <Link
-                href="/privacy"
-                className="inline-flex h-10 items-center rounded-full px-1 text-sm font-medium text-primary underline-offset-4 transition hover:underline"
-              >
-                Privacy & cookies
-              </Link>
-            </div>
+          <h2 id="consent-title" className="mt-3 text-lg font-semibold tracking-[-0.04em] sm:text-xl">
+            Allow lightweight visitor analytics?
+          </h2>
+          <p id="consent-description" className="mt-2 text-sm leading-6 text-muted-foreground">
+            Helps measure visits, resume downloads, and contact clicks. Analytics stays off until you choose.
+          </p>
+          <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+            <Button type="button" className="h-10 rounded-full px-4 sm:flex-1" onClick={() => updateConsent("granted")}>
+              Accept Analytics
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              className="glass-panel h-10 rounded-full border-white/15 bg-transparent px-4 sm:flex-1"
+              onClick={() => updateConsent("denied")}
+            >
+              Decline
+            </Button>
+          </div>
+          <div className="mt-3 flex items-center justify-between gap-3 text-xs sm:text-sm">
+            <span className="text-muted-foreground">You can change this later.</span>
+            <Link
+              href="/privacy"
+              className="font-medium text-primary underline-offset-4 transition hover:underline"
+            >
+              Privacy & cookies
+            </Link>
           </div>
         </div>
       </div>

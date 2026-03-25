@@ -33,9 +33,13 @@ export function HeroSection() {
   ]
 
   return (
-    <header aria-labelledby="hero-title" aria-describedby="hero-summary" className="relative px-4 pb-20 pt-32 sm:px-6 sm:pt-36 lg:pt-40">
+    <header
+      aria-labelledby="hero-title"
+      aria-describedby="hero-summary"
+      className="relative px-4 pb-16 pt-24 sm:px-6 sm:pb-20 sm:pt-32 lg:pt-40"
+    >
       <div className="mx-auto grid max-w-7xl gap-6 sm:gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           <div className="glass-panel motion-pill inline-flex w-full animate-reveal justify-center rounded-full px-4 py-2 text-center text-sm font-medium text-foreground/80 sm:w-auto sm:justify-start sm:text-left">
             <span className="mr-2 inline-flex size-6 items-center justify-center rounded-full border border-primary/20 bg-primary/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]">
               <Flame className="size-4 text-primary" />
