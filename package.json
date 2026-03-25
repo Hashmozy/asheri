@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "next build && bun run pages:sync",
     "clean:dev": "rm -rf .next-dev",
     "dev": "bun run clean:dev && next dev --turbopack",
     "lint": "eslint .",
+    "pages:sync": "bun run scripts/sync-pages.mjs",
     "start": "next start"
   },
   "dependencies": {

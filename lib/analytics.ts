@@ -8,6 +8,7 @@ export const analyticsEvents = {
 
 export const ANALYTICS_CONSENT_STORAGE_KEY = "asheri-analytics-consent"
 export const ANALYTICS_CONSENT_OPEN_EVENT = "asheri-analytics:open-preferences"
+export const ANALYTICS_CONSENT_WAIT_FOR_UPDATE_MS = 500
 
 export type AnalyticsEventName = (typeof analyticsEvents)[keyof typeof analyticsEvents]
 export type AnalyticsConsentChoice = "granted" | "denied"
@@ -26,6 +27,11 @@ export const deniedConsentMode = {
   ad_storage: "denied",
   ad_user_data: "denied",
   analytics_storage: "denied",
+} as const
+
+export const defaultConsentMode = {
+  ...deniedConsentMode,
+  wait_for_update: ANALYTICS_CONSENT_WAIT_FOR_UPDATE_MS,
 } as const
 
 export const grantedConsentMode = {

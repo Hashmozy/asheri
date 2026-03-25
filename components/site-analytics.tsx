@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import {
   ANALYTICS_CONSENT_OPEN_EVENT,
   ANALYTICS_CONSENT_STORAGE_KEY,
+  defaultConsentMode,
   deniedConsentMode,
   grantedConsentMode,
   normalizeAnalyticsConsent,
@@ -22,7 +23,15 @@ declare global {
   }
 }
 
-function ensureAnalytics() {
+function applyConsentUpdate(consent: "granted" | "denied") {
+  if (!measurementId || typeof window === "undefined" || typeof window.gtag !== "function") {
+    return
+  }
+
+  window.gtag("consent", "update", consent === "granted" ? grantedConsentMode : deniedConsentMode)
+}
+
+function ensureAnalytics(initialConsent: "granted" | "denied" | "unknown") {
   if (!measurementId || typeof window === "undefined") {
     return
   }
@@ -36,7 +45,8 @@ function ensureAnalytics() {
   }
 
   if (!window.__asheriAnalyticsInitialized) {
-    window.gtag("consent", "default", deniedConsentMode)
+    window.gtag("consent", "default", defaultConsentMode)
+    window.gtag("set", "ads_data_redaction", true)
     window.gtag("js", new Date())
     window.gtag("config", measurementId, {
       anonymize_ip: true,
@@ -44,6 +54,10 @@ function ensureAnalytics() {
       transport_type: "beacon",
     })
     window.__asheriAnalyticsInitialized = true
+  }
+
+  if (initialConsent !== "unknown") {
+    applyConsentUpdate(initialConsent)
   }
 
   const existingScript = document.getElementById("google-analytics-tag")
@@ -81,9 +95,8 @@ export function SiteAnalytics() {
       return
     }
 
-    ensureAnalytics()
-
     const storedConsent = normalizeAnalyticsConsent(window.localStorage.getItem(ANALYTICS_CONSENT_STORAGE_KEY))
+    ensureAnalytics(storedConsent)
     setConsent(storedConsent)
     setIsBannerOpen(storedConsent === "unknown")
     setIsHydrated(true)
@@ -101,18 +114,6 @@ export function SiteAnalytics() {
     window.addEventListener(ANALYTICS_CONSENT_OPEN_EVENT, openPreferences)
     return () => window.removeEventListener(ANALYTICS_CONSENT_OPEN_EVENT, openPreferences)
   }, [])
-
-  useEffect(() => {
-    if (!measurementId || !isHydrated || consent === "unknown" || typeof window.gtag !== "function") {
-      return
-    }
-
-    window.gtag("consent", "update", consent === "granted" ? grantedConsentMode : deniedConsentMode)
-
-    if (consent !== "granted") {
-      lastTrackedPathRef.current = null
-    }
-  }, [consent, isHydrated])
 
   useEffect(() => {
     if (!measurementId || !isHydrated || consent !== "granted") {
@@ -175,9 +176,14 @@ export function SiteAnalytics() {
   }
 
   const updateConsent = (nextConsent: "granted" | "denied") => {
+    applyConsentUpdate(nextConsent)
     window.localStorage.setItem(ANALYTICS_CONSENT_STORAGE_KEY, nextConsent)
     setConsent(nextConsent)
     setIsBannerOpen(false)
+
+    if (nextConsent !== "granted") {
+      lastTrackedPathRef.current = null
+    }
   }
 
   return isBannerOpen ? (
@@ -191,7 +197,8 @@ export function SiteAnalytics() {
             </h2>
             <p className="mt-3 text-sm leading-7 text-muted-foreground sm:text-base">
               This portfolio can use Google Analytics to understand visits and key actions such as resume downloads,
-              project clicks, and contact actions. Analytics stays off until you choose.
+              project clicks, and contact actions. Analytics stays off until you choose, and ad-related data stays
+              denied.
             </p>
             <div className="mt-4">
               <Link

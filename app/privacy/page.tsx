@@ -30,7 +30,7 @@ const privacyHighlights = [
   {
     title: "How consent works",
     description:
-      "Google Analytics is configured with analytics storage denied by default. Nothing analytics-related is enabled until you accept from the consent prompt.",
+      "Google Analytics is configured with consent denied by default, a short update wait window, and ads data redaction. Nothing analytics-related is enabled until you accept from the consent prompt.",
     icon: ShieldCheck,
   },
   {
